@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR4U — Free Custom QR Code Generator with Logo &amp; Frames | Wi-Fi, vCard, WhatsApp, PNG &amp; SVG</title>
+  <meta name="description" content="Create custom QR codes with optional frames and center logos on QR4U (qr4u.org) for Website URL, Wi-Fi, vCard, WhatsApp, Social, PDF, Text, SMS, Email, and Phone. Instant PNG and SVG export." />
+  <meta name="keywords" content="qr4u, free qr code generator, custom qr code with logo, qr code frame maker, whatsapp qr code generator, wifi qr code generator, vcard qr code, svg png qr code" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://qr4u.org/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="QR4U — Free Custom QR Code Generator with Logo &amp; Frames" />
+  <meta property="og:description" content="Generate custom QR codes with optional frames and logos in PNG or SVG format for free on QR4U." />
+  <meta property="og:url" content="https://qr4u.org/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="QR4U — Free Custom QR Code Generator with Logo &amp; Frames" />
+  <meta name="twitter:description" content="Create custom QR codes for URLs, Wi-Fi, vCard, WhatsApp, PDFs, and more." />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "QR4U Custom QR Code Studio",
+        "url": "https://qr4u.org/",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      },
+      {
+        "@type": "HowTo",
+        "name": "How to Create a Custom QR Code",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "name": "Choose QR Type & Content",
+            "text": "Select your QR code type and enter your link, Wi-Fi details, vCard contact, or message."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Select Frame (Optional)",
+            "text": "Open the Frame section if you want to add a frame and label text around your QR code."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Select Logo (Optional)",
+            "text": "Open the Logo section if you want to add a built-in icon or upload your own logo in the center."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Download PNG or SVG",
+            "text": "Preview your QR code and export it as PNG or SVG."
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-soft: #eff6ff;
+      --border: #e2e8f0;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .nav-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .logo { font-size: 1.25rem; font-weight: 800; color: var(--primary); text-decoration: none; }
+    .logo span { color: var(--text); }
+    nav a { text-decoration: none; color: var(--muted); font-weight: 500; margin-left: 20px; font-size: 0.95rem; }
+    nav a:hover { color: var(--primary); }
+
+    .hero { text-align: center; padding: 32px 0 22px; }
+    .hero h1 { font-size: clamp(1.75rem, 3.5vw, 2.45rem); font-weight: 800; margin-bottom: 8px; }
+    .hero p { color: var(--muted); max-width: 750px; margin: 0 auto; }
+
+    .studio-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+      padding: 24px;
+      margin-bottom: 42px;
+    }
+
+    .step-badge {
+      display: inline-block;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .type-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(98px, 1fr)); gap: 10px; margin-bottom: 24px; }
+
+    .type-btn {
+      background: #f8fafc;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 11px 8px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: var(--muted);
+      transition: 0.15s ease;
+    }
+
+    .type-btn svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.9; }
+    .type-btn:hover { border-color: #93c5fd; color: var(--primary); background: #fff; }
+    .type-btn.active { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
+
+    .workspace { display: grid; grid-template-columns: 1.4fr 0.9fr; gap: 28px; align-items: start; }
+    @media (max-width: 880px) { .workspace { grid-template-columns: 1fr; } }
+
+    .panel-box { background: #ffffff; border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 18px; }
+    .panel-box h2 { font-size: 1.08rem; margin-bottom: 12px; }
+
+    .section-tabs { display: flex; gap: 8px; background: #f1f5f9; padding: 5px; border-radius: 12px; margin-bottom: 16px; width: fit-content; }
+    .section-tab-btn { border: none; background: transparent; color: var(--muted); font-weight: 700; font-size: 0.9rem; padding: 8px 18px; border-radius: 9px; cursor: pointer; transition: 0.15s ease; }
+    .section-tab-btn.active { background: var(--primary-soft); color: var(--primary); box-shadow: 0 2px 6px rgba(37, 99, 235, 0.1); }
+
+    label { display: block; font-size: 0.88rem; font-weight: 600; margin-top: 12px; margin-bottom: 5px; color: var(--text); }
+    input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+      width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 9px;
+      font-size: 0.95rem; background: #ffffff; color: var(--text); font-family: inherit;
+    }
+    textarea { min-height: 76px; resize: vertical; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14); }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    @media (max-width: 580px) { .three-col, .two-col { grid-template-columns: 1fr; } }
+
+    .frame-templates-row { display: flex; gap: 10px; overflow-x: auto; padding: 6px 2px 12px; }
+    .frame-tpl-btn {
+      min-width: 74px; height: 78px; border: 2px solid transparent; background: #f8fafc;
+      border-radius: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      padding: 8px; transition: 0.15s ease; flex-shrink: 0;
+    }
+    .frame-tpl-btn:hover { background: #eff6ff; }
+    .frame-tpl-btn.active { background: #eff6ff; border-color: var(--primary); }
+    .frame-tpl-btn svg { width: 54px; height: 58px; }
+
+    .sub-settings-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-top: 8px; }
+    .color-pill-box {
+      display: flex; align-items: center; justify-content: space-between;
+      background: #ffffff; border: 1px solid #cbd5e1; border-radius: 9px;
+      padding: 7px 10px; font-size: 0.86rem; font-weight: 600; color: var(--muted);
+    }
+    input[type="color"] { width: 28px; height: 26px; border: none; background: none; cursor: pointer; padding: 0; }
+
+    .logo-picker-row { display: flex; gap: 12px; overflow-x: auto; padding: 8px 2px 12px; align-items: center; }
+    .logo-circle-btn {
+      width: 50px; height: 50px; border-radius: 14px; border: 2px solid transparent;
+      background: #ffffff; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      padding: 4px; flex-shrink: 0; transition: 0.15s ease;
+    }
+    .logo-circle-btn:hover { background: #f1f5f9; }
+    .logo-circle-btn.active { background: #eff6ff; border-color: var(--primary); }
+
+    .upload-dropzone {
+      margin-top: 12px; border: 1.5px dashed #cbd5e1; border-radius: 12px;
+      padding: 16px; text-align: center; cursor: pointer; background: #f8fafc;
+      color: var(--text); font-size: 0.92rem; font-weight: 600; transition: 0.15s ease;
+    }
+    .upload-dropzone:hover, .upload-dropzone.dragover { border-color: var(--primary); background: #eff6ff; }
+    .upload-dropzone span { color: var(--muted); font-weight: 400; font-size: 0.84rem; }
+
+    .preview-card {
+      background: #f8fafc; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 22px; text-align: center; position: sticky; top: 82px;
+    }
+    .qr-stage {
+      background: #ffffff; border: 1px solid var(--border); border-radius: 18px;
+      padding: 18px; display: inline-flex; align-items: center; justify-content: center;
+      margin: 12px auto 14px; box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06); max-width: 100%;
+    }
+    #qrCanvas { max-width: 100%; height: auto; display: block; }
+
+    .error-msg { color: #dc2626; font-size: 0.85rem; min-height: 20px; margin-bottom: 8px; font-weight: 500; }
+    .download-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+    .btn { border: none; border-radius: 10px; padding: 12px 14px; font-size: 0.94rem; font-weight: 700; cursor: pointer; transition: 0.15s ease; }
+    .btn-primary { background: var(--primary); color: #ffffff; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-outline { background: #ffffff; color: var(--text); border: 1.5px solid #cbd5e1; }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+    .helper-text { font-size: 0.8rem; color: var(--muted); margin-top: 5px; }
+
+    .content-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 32px; margin-bottom: 42px; }
+    .content-card h2 { font-size: 1.55rem; margin-bottom: 12px; }
+    .content-card h3 { font-size: 1.18rem; margin-top: 26px; margin-bottom: 10px; }
+    .content-card p, .content-card li { color: var(--muted); margin-bottom: 10px; }
+    .content-card ul, .content-card ol { padding-left: 22px; margin-top: 6px; margin-bottom: 14px; }
+
+    .seo-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.93rem; }
+    .seo-table th, .seo-table td { border: 1px solid var(--border); padding: 11px 14px; text-align: left; }
+    .seo-table th { background: #f8fafc; color: var(--text); font-weight: 700; }
+    .seo-table td { color: var(--muted); }
+
+    footer { background: var(--surface); border-top: 1px solid var(--border); padding: 24px 0; text-align: center; color: var(--muted); font-size: 0.9rem; }
+    footer a { color: var(--muted); text-decoration: none; margin: 0 10px; }
+    footer a:hover { color: var(--primary); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav-bar">
+      <a href="/" class="logo">QR<span>4U</span></a>
+      <nav>
+        <a href="#generator">QR Generator</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#use-cases">Use Cases</a>
+        <a href="#faq">FAQ</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Free Custom QR Code Generator with Optional Frames &amp; Logos</h1>
+      <p>Start with a clean QR code and add a frame or logo only when you want. Supports Website URL, Wi-Fi, vCard, WhatsApp, Social, PDF Link, Plain Text, SMS, Email, and Phone with PNG &amp; SVG export.</p>
+    </section>
+
+    <section class="studio-wrapper" id="generator">
+      <span class="step-badge">Step 1: Choose QR Code Type</span>
+      <div class="type-grid" role="tablist" aria-label="QR Code Types">
+        <button type="button" class="type-btn active" onclick="switchType('url', this)">
+          <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          <span>Website URL</span>
+        </button>
+        <button type="button" class="type-btn" onclick="switchType('wifi', this)">
+          <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+          <span>Wi-Fi</span>
+        </button>
+        <button type="button" class="type-btn" onclick="switchType('vcard', this)">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <span>vCard</span>
+        </button>
+        <button type="button" class="type-btn" onclick="switchType('whatsapp', this)">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          <span>WhatsApp</span>
+        </button>
+        <button type="button" class="type-btn" onclick="switchType('social', this)">
+          <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          <span>Social</span>
+        </button>
+        <button type="button" class="type-btn" onclick="switchType('pdf', this)">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span>PDF Link</span>
+        </button>
+        <button type="button" class="type-btn" onclick="switchType('text', this)">
+          <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="13" y2="16"/></svg>
+          <span>Plain Text</span>
+        </button>
+        <button type="button" class="type-btn" onclick="switchType('sms', this)">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span>SMS</span>
+        </button>
+        <button type="button" class="type-btn" onclick="switchType('email', this)">
+          <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>
+          <span>Email</span>
+        </button>
+        <button type="button" class="type-btn" onclick="switchType('phone', this)">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>Phone</span>
+        </button>
+      </div>
+
+      <div class="workspace">
+        <div>
+          <div class="panel-box">
+            <span class="step-badge">Step 2: Enter Content</span>
+            <h2 id="formHeading">Website URL Details</h2>
+
+            <div id="fields-url" class="qr-fields">
+              <label for="inUrl">Destination Website URL</label>
+              <input type="text" id="inUrl" value="https://qr4u.org" placeholder="https://yourwebsite.com" oninput="renderQR()" />
+            </div>
+
+            <div id="fields-wifi" class="qr-fields" style="display: none;">
+              <label for="inWifiSsid">Wi-Fi Network Name (SSID)</label>
+              <input type="text" id="inWifiSsid" placeholder="Cafe_Guest_WiFi" oninput="renderQR()" />
+              <div class="two-col">
+                <div>
+                  <label for="inWifiPass">Wi-Fi Password</label>
+                  <input type="text" id="inWifiPass" placeholder="Password123" oninput="renderQR()" />
+                </div>
+                <div>
+                  <label for="inWifiEnc">Security Type</label>
+                  <select id="inWifiEnc" onchange="renderQR()">
+                    <option value="WPA">WPA / WPA2</option>
+                    <option value="WEP">WEP</option>
+                    <option value="nopass">None (Open)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div id="fields-vcard" class="qr-fields" style="display: none;">
+              <div class="two-col">
+                <div>
+                  <label for="inVcName">Full Name</label>
+                  <input type="text" id="inVcName" placeholder="Tariq Mahmood" oninput="renderQR()" />
+                </div>
+                <div>
+                  <label for="inVcOrg">Company / Role</label>
+                  <input type="text" id="inVcOrg" placeholder="Studio Co." oninput="renderQR()" />
+                </div>
+              </div>
+              <div class="two-col">
+                <div>
+                  <label for="inVcPhone">Phone Number</label>
+                  <input type="tel" id="inVcPhone" placeholder="+923001234567" oninput="renderQR()" />
+                </div>
+                <div>
+                  <label for="inVcEmail">Email Address</label>
+                  <input type="email" id="inVcEmail" placeholder="hello@qr4u.org" oninput="renderQR()" />
+                </div>
+              </div>
+              <label for="inVcWeb">Website (Optional)</label>
+              <input type="text" id="inVcWeb" placeholder="https://qr4u.org" oninput="renderQR()" />
+            </div>
+
+            <div id="fields-whatsapp" class="qr-fields" style="display: none;">
+              <label for="inWaPhone">WhatsApp Number (with Country Code)</label>
+              <input type="tel" id="inWaPhone" placeholder="923001234567" oninput="renderQR()" />
+              <p class="helper-text">Enter digits including country code without + or spaces (e.g., 923001234567).</p>
+              <label for="inWaMsg">Pre-Filled WhatsApp Message</label>
+              <textarea id="inWaMsg" placeholder="Hi! I scanned your QR code..." oninput="renderQR()"></textarea>
+            </div>
+
+            <div id="fields-social" class="qr-fields" style="display: none;">
+              <label for="inSocUrl">Social Profile or Channel URL</label>
+              <input type="text" id="inSocUrl" placeholder="https://instagram.com/yourhandle" oninput="renderQR()" />
+            </div>
+
+            <div id="fields-pdf" class="qr-fields" style="display: none;">
+              <label for="inPdfUrl">Public PDF File Link</label>
+              <input type="text" id="inPdfUrl" placeholder="https://qr4u.org/menu.pdf" oninput="renderQR()" />
+              <p class="helper-text">Paste a public Google Drive, Dropbox, or web link pointing to your PDF.</p>
+            </div>
+
+            <div id="fields-text" class="qr-fields" style="display: none;">
+              <label for="inText">Plain Text Content</label>
+              <textarea id="inText" placeholder="Enter any text, voucher code, or note..." oninput="renderQR()"></textarea>
+            </div>
+
+            <div id="fields-sms" class="qr-fields" style="display: none;">
+              <label for="inSmsPhone">Recipient Phone Number</label>
+              <input type="tel" id="inSmsPhone" placeholder="+923001234567" oninput="renderQR()" />
+              <label for="inSmsBody">Pre-Filled SMS Text</label>
+              <textarea id="inSmsBody" placeholder="Type message..." oninput="renderQR()"></textarea>
+            </div>
+
+            <div id="fields-email" class="qr-fields" style="display: none;">
+              <label for="inEmailTo">Recipient Email</label>
+              <input type="email" id="inEmailTo" placeholder="contact@qr4u.org" oninput="renderQR()" />
+              <label for="inEmailSub">Email Subject</label>
+              <input type="text" id="inEmailSub" placeholder="Inquiry" oninput="renderQR()" />
+              <label for="inEmailBody">Email Body</label>
+              <textarea id="inEmailBody" placeholder="Hello..." oninput="renderQR()"></textarea>
+            </div>
+
+            <div id="fields-phone" class="qr-fields" style="display: none;">
+              <label for="inPhone">Phone Number to Call</label>
+              <input type="tel" id="inPhone" placeholder="+923001234567" oninput="renderQR()" />
+            </div>
+          </div>
+
+          <div class="panel-box">
+            <span class="step-badge">Step 3: Optional Frame &amp; Logo</span>
+
+            <div class="section-tabs" role="tablist" aria-label="Customize Sections">
+              <button type="button" class="section-tab-btn active" id="tabBtnFrame" onclick="switchSection('frame')">Frame</button>
+              <button type="button" class="section-tab-btn" id="tabBtnLogo" onclick="switchSection('logo')">Logo</button>
+            </div>
+
+            <div id="section-frame">
+              <h2>Choose a frame (optional)</h2>
+
+              <div class="frame-templates-row" role="listbox" aria-label="QR Frame Templates">
+                <button type="button" class="frame-tpl-btn active" title="No Frame" onclick="selectFrame('none', this)">
+                  <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="18" fill="none" stroke="#2563eb" stroke-width="3"/><line x1="17" y1="17" x2="43" y2="43" stroke="#2563eb" stroke-width="3"/></svg>
+                </button>
+
+                <button type="button" class="frame-tpl-btn" title="Envelope Frame" onclick="selectFrame('envelope', this)">
+                  <svg viewBox="0 0 60 64">
+                    <rect x="13" y="4" width="34" height="34" rx="3" fill="#fff" stroke="#64748b" stroke-width="2.5"/>
+                    <rect x="19" y="10" width="22" height="22" fill="#cbd5e1"/>
+                    <path d="M8 24 L30 40 L52 24 L52 58 L8 58 Z" fill="#fff" stroke="#64748b" stroke-width="2.5" stroke-linejoin="round"/>
+                    <path d="M8 58 L24 36 M52 58 L36 36" stroke="#64748b" stroke-width="2"/>
+                  </svg>
+                </button>
+
+                <button type="button" class="frame-tpl-btn" title="Classic Banner" onclick="selectFrame('banner', this)">
+                  <svg viewBox="0 0 60 64">
+                    <rect x="10" y="4" width="40" height="40" rx="4" fill="#fff" stroke="#64748b" stroke-width="2.5"/>
+                    <rect x="16" y="10" width="28" height="28" fill="#cbd5e1"/>
+                    <rect x="10" y="47" width="40" height="12" rx="3" fill="#64748b"/>
+                  </svg>
+                </button>
+
+                <button type="button" class="frame-tpl-btn" title="Sketch Frame" onclick="selectFrame('sketch', this)">
+                  <svg viewBox="0 0 60 64">
+                    <rect x="12" y="6" width="36" height="36" fill="#fff" stroke="#64748b" stroke-width="2.5"/>
+                    <rect x="18" y="12" width="24" height="24" fill="#cbd5e1"/>
+                    <line x1="4" y1="14" x2="10" y2="12" stroke="#64748b" stroke-width="2"/>
+                    <line x1="50" y1="12" x2="56" y2="14" stroke="#64748b" stroke-width="2"/>
+                    <line x1="4" y1="30" x2="10" y2="30" stroke="#64748b" stroke-width="2"/>
+                    <line x1="50" y1="30" x2="56" y2="30" stroke="#64748b" stroke-width="2"/>
+                    <rect x="12" y="42" width="36" height="14" fill="#64748b"/>
+                  </svg>
+                </button>
+
+                <button type="button" class="frame-tpl-btn" title="Mug Frame" onclick="selectFrame('mug', this)">
+                  <svg viewBox="0 0 60 64">
+                    <path d="M12 18 Q12 10 22 11 Q28 7 35 11 Q44 10 44 18 L44 56 L12 56 Z" fill="#fff" stroke="#64748b" stroke-width="2.5"/>
+                    <path d="M44 24 L51 24 C54 24 54 44 51 44 L44 44" fill="none" stroke="#64748b" stroke-width="3"/>
+                    <rect x="17" y="20" width="22" height="22" fill="#cbd5e1"/>
+                    <rect x="14" y="45" width="28" height="9" rx="2" fill="#64748b"/>
+                  </svg>
+                </button>
+
+                <button type="button" class="frame-tpl-btn" title="Scooter Frame" onclick="selectFrame('scooter', this)">
+                  <svg viewBox="0 0 60 64">
+                    <rect x="6" y="18" width="22" height="28" rx="3" fill="#0f172a"/>
+                    <rect x="9" y="21" width="16" height="16" rx="1.5" fill="#ffffff"/>
+                    <rect x="12" y="24" width="10" height="10" fill="#334155"/>
+                    <text x="17" y="42.5" text-anchor="middle" fill="#ffffff" font-size="4.6" font-weight="700" font-family="sans-serif">Scan me!</text>
+                    <path d="M10 49 Q10 39 20 38 L34 38 L36 25 L43 25 L46 47 L35 47 L22 47 L16 49 Z" fill="#64748b"/>
+                    <path d="M22 35 Q27 33 32 35 L32 38 L22 38 Z" fill="#0f172a"/>
+                    <path d="M35 23 L42 23 L42 27 L35 27 Z" fill="#0f172a"/>
+                    <circle cx="46" cy="27" r="3.5" fill="#0f172a"/>
+                    <path d="M10 49 Q10 42 18 42 L18 49 Z" fill="#0f172a"/>
+                    <path d="M39 47 Q39 41 49 41 L49 47 Z" fill="#0f172a"/>
+                    <circle cx="18" cy="54" r="6" fill="#64748b"/><circle cx="18" cy="54" r="2.2" fill="#fff"/>
+                    <circle cx="45" cy="54" r="6" fill="#64748b"/><circle cx="45" cy="54" r="2.2" fill="#fff"/>
+                  </svg>
+                </button>
+
+                <button type="button" class="frame-tpl-btn" title="Coffee Cup" onclick="selectFrame('coffee', this)">
+                  <svg viewBox="0 0 60 64">
+                    <path d="M22 6 Q20 10 22 13 M30 5 Q28 9 30 13 M38 6 Q36 10 38 13" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M12 17 L44 17 L41 46 C40 50 16 50 15 46 Z" fill="#fff" stroke="#64748b" stroke-width="2.5"/>
+                    <path d="M44 22 L49 22 C52 22 52 36 48 36 L42 36" fill="none" stroke="#64748b" stroke-width="2.5"/>
+                    <rect x="18" y="21" width="20" height="20" fill="#cbd5e1"/>
+                    <path d="M8 51 L48 51 L44 55 L12 55 Z" fill="#64748b"/>
+                  </svg>
+                </button>
+              </div>
+
+              <div class="sub-settings-box">
+                <label for="frameText" style="margin-top: 0;">Frame Text</label>
+                <input type="text" id="frameText" value="Scan me!" maxlength="22" placeholder="Scan me!" oninput="renderQR()" />
+
+                <div class="three-col" style="margin-top: 8px;">
+                  <div>
+                    <label for="textColor">Text color</label>
+                    <div class="color-pill-box">
+                      <span id="textHex">#000000</span>
+                      <input type="color" id="textColor" value="#000000" oninput="syncColors(); renderQR()" />
+                    </div>
+                  </div>
+                  <div>
+                    <label for="fgColor">QR Colour</label>
+                    <div class="color-pill-box">
+                      <span id="fgHex">#000000</span>
+                      <input type="color" id="fgColor" value="#000000" oninput="syncColors(); renderQR()" />
+                    </div>
+                  </div>
+                  <div>
+                    <label for="bgColor">Background colour</label>
+                    <div class="color-pill-box">
+                      <span id="bgHex">#FFFFFF</span>
+                      <input type="color" id="bgColor" value="#ffffff" oninput="syncColors(); renderQR()" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="section-logo" style="display: none;">
+              <h2>Choose a logo (optional)</h2>
+
+              <div class="logo-picker-row" role="listbox" aria-label="Preset QR Logos">
+                <button type="button" class="logo-circle-btn active" title="No Logo" onclick="selectPresetLogo('none', this)">
+                  <svg width="36" height="36" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="#2563eb" stroke-width="2.5"/><line x1="9" y1="9" x2="31" y2="31" stroke="#2563eb" stroke-width="2.5"/></svg>
+                </button>
+
+                <button type="button" class="logo-circle-btn" title="Scan Me Logo" onclick="selectPresetLogo('scan-me', this)">
+                  <svg width="38" height="38" viewBox="0 0 40 40">
+                    <circle cx="20" cy="20" r="18" fill="#0f172a"/>
+                    <text x="20" y="18" text-anchor="middle" fill="#ffffff" font-size="7.2" font-weight="800" font-family="sans-serif">SCAN</text>
+                    <text x="20" y="26.5" text-anchor="middle" fill="#ffffff" font-size="7.8" font-weight="800" font-family="sans-serif">ME</text>
+                  </svg>
+                </button>
+
+                <button type="button" class="logo-circle-btn" title="WhatsApp" onclick="selectPresetLogo('whatsapp', this)">
+                  <svg width="38" height="38" viewBox="0 0 40 40">
+                    <circle cx="20" cy="20" r="18" fill="#25d366"/>
+                    <path d="M20.04 10c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L10.05 30l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C29.95 14.45 25.5 10 20.04 10zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.26 8.26 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24 4.54 0 8.24 3.7 8.24 8.24 0 4.54-3.7 8.24-8.23 8.24z" fill="#fff"/>
+                    <path d="M24.56 22.38c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.07-.1-.23-.16-.48-.29z" fill="#fff"/>
+                  </svg>
+                </button>
+
+                <button type="button" class="logo-circle-btn" title="Website Link" onclick="selectPresetLogo('link', this)">
+                  <svg width="38" height="38" viewBox="0 0 40 40">
+                    <circle cx="20" cy="20" r="18" fill="#7c3aed"/>
+                    <rect x="13.5" y="18.5" width="8" height="8" rx="1.2" fill="none" stroke="#fff" stroke-width="2.1"/>
+                    <rect x="18.5" y="13.5" width="8" height="8" rx="1.2" fill="none" stroke="#fff" stroke-width="2.1"/>
+                    <line x1="17.5" y1="22.5" x2="22.5" y2="17.5" stroke="#fff" stroke-width="2.1" stroke-linecap="round"/>
+                  </svg>
+                </button>
+
+                <button type="button" class="logo-circle-btn" title="Location Pin" onclick="selectPresetLogo('location', this)">
+                  <svg width="38" height="38" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#ef4444"/><path d="M20 10c-4.4 0-8 3.5-8 7.8 0 5.6 8 12.7 8 12.7s8-7.1 8-12.7c0-4.3-3.6-7.8-8-7.8z" fill="none" stroke="#fff" stroke-width="2.2"/><circle cx="20" cy="18" r="2.8" fill="#fff"/></svg>
+                </button>
+
+                <button type="button" class="logo-circle-btn" title="Wi-Fi" onclick="selectPresetLogo('wifi', this)">
+                  <svg width="38" height="38" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#14b8a6"/><path d="M11 17.5a13 13 0 0 1 18 0M14 21a8.8 8.8 0 0 1 12 0M17 24.5a4.5 4.5 0 0 1 6 0" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><circle cx="20" cy="28" r="1.7" fill="#fff"/></svg>
+                </button>
+
+                <button type="button" class="logo-circle-btn" title="Contact vCard" onclick="selectPresetLogo('contact', this)">
+                  <svg width="38" height="38" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#2563eb"/><rect x="11" y="13" width="18" height="14" rx="2" fill="none" stroke="#fff" stroke-width="2"/><circle cx="16" cy="19" r="2" fill="#fff"/><line x1="21" y1="18" x2="26" y2="18" stroke="#fff" stroke-width="1.8"/><line x1="21" y1="22" x2="26" y2="22" stroke="#fff" stroke-width="1.8"/></svg>
+                </button>
+
+                <button type="button" class="logo-circle-btn" title="Email" onclick="selectPresetLogo('email', this)">
+                  <svg width="38" height="38" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#ca8a04"/><rect x="11" y="14" width="18" height="12" rx="2" fill="none" stroke="#fff" stroke-width="2"/><polyline points="11 15 20 21 29 15" fill="none" stroke="#fff" stroke-width="2"/></svg>
+                </button>
+
+                <button type="button" class="logo-circle-btn" title="Restaurant Menu" onclick="selectPresetLogo('menu', this)">
+                  <svg width="38" height="38" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#6d28d9"/><path d="M13 13v6a2 2 0 0 0 4 0v-6M15 13v14M26 13v14M26 13c2 2 2 6 0 8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+                </button>
+
+                <button type="button" class="logo-circle-btn" title="PayPal" onclick="selectPresetLogo('paypal', this)">
+                  <svg width="38" height="38" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#1d4ed8"/><text x="20" y="26" text-anchor="middle" fill="#fff" font-size="18" font-weight="900" font-style="italic" font-family="sans-serif">P</text></svg>
+                </button>
+
+                <button type="button" class="logo-circle-btn" title="Bitcoin" onclick="selectPresetLogo('bitcoin', this)">
+                  <svg width="38" height="38" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#f97316"/><text x="20" y="26" text-anchor="middle" fill="#fff" font-size="18" font-weight="900" font-family="sans-serif">₿</text></svg>
+                </button>
+              </div>
+
+              <div class="upload-dropzone" id="dropzone" onclick="document.getElementById('logoUploadInput').click()">
+                <input type="file" id="logoUploadInput" accept="image/png,image/jpeg,image/jpg" style="display: none;" onchange="handleLogoFile(this.files[0])" />
+                ☁ Drag and drop or click to upload a logo <span>(JPG, JPEG, or PNG / 2MB max)</span>
+              </div>
+              <div class="error-msg" id="logoError" style="margin-top: 6px; margin-bottom: 0;"></div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="preview-card">
+          <span class="step-badge">Live Preview</span>
+          <div class="qr-stage">
+            <canvas id="qrCanvas" width="420" height="420"></canvas>
+          </div>
+          <div class="error-msg" id="errorBox"></div>
+          <div class="download-grid">
+            <button type="button" class="btn btn-primary" onclick="downloadPNG()">Download PNG</button>
+            <button type="button" class="btn btn-outline" onclick="downloadSVG()">Download SVG</button>
+          </div>
+          <p class="helper-text" style="margin-top: 10px;">Generated locally in your browser. Test scanning with your phone camera before printing.</p>
+        </aside>
+      </div>
+    </section>
+
+    <article class="content-card" id="how-it-works">
+      <h2>Free Custom QR Code Generator with Optional Frames &amp; Center Logos</h2>
+      <p>QR4U gives you a clean, ready-to-scan QR code immediately on load—without forcing a frame or center logo unless you choose to add one. When you do want extra branding, you can switch between separate <strong>Frame</strong> and <strong>Logo</strong> sections, customize colors, and export as <strong>PNG</strong> or <strong>SVG</strong>.</p>
+
+      <h3>How to Use the Generator</h3>
+      <ol>
+        <li><strong>Pick a QR type &amp; enter details:</strong> Choose Website URL, Wi-Fi, vCard, WhatsApp, Social, PDF Link, Plain Text, SMS, Email, or Phone.</li>
+        <li><strong>Open the Frame tab (optional):</strong> Choose a frame style such as Envelope, Classic Banner, Sketch, Mug, Scooter, or Coffee Cup and customize label text and colors.</li>
+        <li><strong>Open the Logo tab (optional):</strong> Pick a preset icon (Scan Me, WhatsApp, Link, Location, Wi-Fi, Contact, Email, Menu, PayPal, Bitcoin) or upload your own JPG/PNG logo.</li>
+        <li><strong>Download PNG or SVG:</strong> Save your finished QR code for digital sharing or crisp print layouts.</li>
+      </ol>
+
+      <h3 id="use-cases">QR Code Formats &amp; Practical Use Cases</h3>
+      <table class="seo-table">
+        <thead>
+          <tr>
+            <th>Use Case</th>
+            <th>QR Type</th>
+            <th>Optional Frame &amp; Logo</th>
+            <th>Best Format</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Food Delivery &amp; Takeaway</td>
+            <td>WhatsApp or Website URL</td>
+            <td>Scooter Frame + WhatsApp or Scan Me Logo</td>
+            <td>PNG or SVG</td>
+          </tr>
+          <tr>
+            <td>Cafes, Menus &amp; Shops</td>
+            <td>PDF Link or Wi-Fi</td>
+            <td>Coffee Cup or Mug + Wi-Fi or Menu Logo</td>
+            <td>SVG for print</td>
+          </tr>
+          <tr>
+            <td>Business Cards &amp; Networking</td>
+            <td>vCard Contact</td>
+            <td>Envelope or Classic Banner + Contact Logo</td>
+            <td>SVG for print</td>
+          </tr>
+          <tr>
+            <td>Payments &amp; Links</td>
+            <td>Website URL or Plain Text</td>
+            <td>No Frame or Classic Banner + Link / PayPal / Bitcoin Logo</td>
+            <td>PNG or SVG</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 id="faq">Frequently Asked Questions</h3>
+      <p><strong>1. Are frames and logos selected by default when I open the page?</strong><br />No. The generator starts with <strong>No Frame</strong> and <strong>No Logo</strong> selected so you only add them when you want.</p>
+      <p><strong>2. Can I upload my own brand logo?</strong><br />Yes. Go to the <strong>Logo</strong> section and click or drag-and-drop any JPG, JPEG, or PNG image up to 2MB.</p>
+      <p><strong>3. Do static QR codes expire?</strong><br />No. Static QR codes encode your information directly into the QR pattern and keep working without expiration.</p>
+      <p><strong>4. Should I choose PNG or SVG?</strong><br />Use <strong>PNG</strong> for websites, social posts, and messaging, and <strong>SVG</strong> for scalable printing.</p>
+    </article>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year"></span> QR4U (qr4u.org). All rights reserved.</p>
+      <div style="margin-top: 8px;">
+        <a href="/about.html">About</a>
+        <a href="/privacy-policy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    let activeType = "url";
+    let activeFrame = "none";
+    let activeLogoType = "none";
+    let uploadedLogoImg = null;
+
+    const titlesMap = {
+      url: "Website URL Details",
+      wifi: "Wi-Fi Network Login Details",
+      vcard: "vCard Digital Contact Details",
+      whatsapp: "WhatsApp Direct Chat Details",
+      social: "Social Media Profile Details",
+      pdf: "Hosted PDF Link Details",
+      text: "Plain Text Content",
+      sms: "Pre-Filled SMS Details",
+      email: "Email Draft Details",
+      phone: "Direct Phone Call Details"
+    };
+
+    function switchSection(section) {
+      const isFrame = section === "frame";
+      document.getElementById("tabBtnFrame").classList.toggle("active", isFrame);
+      document.getElementById("tabBtnLogo").classList.toggle("active", !isFrame);
+      document.getElementById("section-frame").style.display = isFrame ? "block" : "none";
+      document.getElementById("section-logo").style.display = !isFrame ? "block" : "none";
+    }
+
+    function switchType(type, btn) {
+      activeType = type;
+      document.querySelectorAll(".type-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+
+      document.querySelectorAll(".qr-fields").forEach(f => (f.style.display = "none"));
+      const box = document.getElementById("fields-" + type);
+      if (box) box.style.display = "block";
+
+      document.getElementById("formHeading").textContent = titlesMap[type] || "QR Details";
+      renderQR();
+    }
+
+    function selectFrame(frame, btn) {
+      activeFrame = frame;
+      document.querySelectorAll(".frame-tpl-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      renderQR();
+    }
+
+    function selectPresetLogo(logoId, btn) {
+      activeLogoType = logoId;
+      uploadedLogoImg = null;
+      document.getElementById("logoError").textContent = "";
+      document.querySelectorAll(".logo-circle-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      renderQR();
+    }
+
+    function syncColors() {
+      document.getElementById("textHex").textContent = document.getElementById("textColor").value.toUpperCase();
+      document.getElementById("fgHex").textContent = document.getElementById("fgColor").value.toUpperCase();
+      document.getElementById("bgHex").textContent = document.getElementById("bgColor").value.toUpperCase();
+    }
+
+    const dropzone = document.getElementById("dropzone");
+    dropzone.addEventListener("dragover", e => {
+      e.preventDefault();
+      dropzone.classList.add("dragover");
+    });
+    dropzone.addEventListener("dragleave", () => dropzone.classList.remove("dragover"));
+    dropzone.addEventListener("drop", e => {
+      e.preventDefault();
+      dropzone.classList.remove("dragover");
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        handleLogoFile(e.dataTransfer.files[0]);
+      }
+    });
+
+    function handleLogoFile(file) {
+      const err = document.getElementById("logoError");
+      err.textContent = "";
+      if (!file) return;
+
+      if (!["image/png", "image/jpeg", "image/jpg"].includes(file.type)) {
+        err.textContent = "Please upload a JPG, JPEG, or PNG image.";
+        return;
+      }
+      if (file.size > 2 * 1024 * 1024) {
+        err.textContent = "File is larger than 2MB. Please choose a smaller logo.";
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (ev) {
+        const img = new Image();
+        img.onload = function () {
+          uploadedLogoImg = img;
+          activeLogoType = "custom";
+          document.querySelectorAll(".logo-circle-btn").forEach(b => b.classList.remove("active"));
+          renderQR();
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function ensureHttp(url) {
+      const clean = url.trim();
+      if (!clean) return "";
+      if (/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(clean)) return clean;
+      return "https://" + clean;
+    }
+
+    function escapeWifi(val) {
+      return val.replace(/([\\;,:"])/g, "\\$1");
+    }
+
+    function getPayload() {
+      const err = document.getElementById("errorBox");
+      err.textContent = "";
+
+      switch (activeType) {
+        case "url": {
+          const v = document.getElementById("inUrl").value.trim();
+          if (!v) { err.textContent = "Enter a website URL."; return null; }
+          return ensureHttp(v);
+        }
+        case "wifi": {
+          const ssid = document.getElementById("inWifiSsid").value.trim();
+          const pass = document.getElementById("inWifiPass").value;
+          const enc = document.getElementById("inWifiEnc").value;
+          if (!ssid) { err.textContent = "Enter your Wi-Fi network name (SSID)."; return null; }
+          return `WIFI:T:${enc};S:${escapeWifi(ssid)};P:${escapeWifi(pass)};;`;
+        }
+        case "vcard": {
+          const name = document.getElementById("inVcName").value.trim();
+          const org = document.getElementById("inVcOrg").value.trim();
+          const phone = document.getElementById("inVcPhone").value.trim();
+          const email = document.getElementById("inVcEmail").value.trim();
+          const web = document.getElementById("inVcWeb").value.trim();
+          if (!name && !phone && !email) { err.textContent = "Enter at least a name, phone, or email."; return null; }
+          return [
+            "BEGIN:VCARD",
+            "VERSION:3.0",
+            name ? `FN:${name}` : "",
+            org ? `ORG:${org}` : "",
+            phone ? `TEL:${phone}` : "",
+            email ? `EMAIL:${email}` : "",
+            web ? `URL:${ensureHttp(web)}` : "",
+            "END:VCARD"
+          ].filter(Boolean).join("\n");
+        }
+        case "whatsapp": {
+          const num = document.getElementById("inWaPhone").value.replace(/[^\d]/g, "");
+          const msg = encodeURIComponent(document.getElementById("inWaMsg").value.trim());
+          if (!num) { err.textContent = "Enter a WhatsApp phone number with country code."; return null; }
+          return msg ? `https://wa.me/${num}?text=${msg}` : `https://wa.me/${num}`;
+        }
+        case "social": {
+          const link = document.getElementById("inSocUrl").value.trim();
+          if (!link) { err.textContent = "Enter your social media link."; return null; }
+          return ensureHttp(link);
+        }
+        case "pdf": {
+          const link = document.getElementById("inPdfUrl").value.trim();
+          if (!link) { err.textContent = "Enter a public link to your PDF file."; return null; }
+          return ensureHttp(link);
+        }
+        case "text": {
+          const txt = document.getElementById("inText").value.trim();
+          if (!txt) { err.textContent = "Enter plain text content."; return null; }
+          return txt;
+        }
+        case "sms": {
+          const ph = document.getElementById("inSmsPhone").value.trim();
+          const body = document.getElementById("inSmsBody").value.trim();
+          if (!ph) { err.textContent = "Enter a phone number for SMS."; return null; }
+          return body ? `SMSTO:${ph}:${body}` : `SMSTO:${ph}`;
+        }
+        case "email": {
+          const to = document.getElementById("inEmailTo").value.trim();
+          const sub = encodeURIComponent(document.getElementById("inEmailSub").value.trim());
+          const body = encodeURIComponent(document.getElementById("inEmailBody").value.trim());
+          if (!to) { err.textContent = "Enter a recipient email address."; return null; }
+          return `mailto:${to}?subject=${sub}&body=${body}`;
+        }
+        case "phone": {
+          const ph = document.getElementById("inPhone").value.trim();
+          if (!ph) { err.textContent = "Enter a phone number."; return null; }
+          return `tel:${ph}`;
+        }
+        default:
+          return null;
+      }
+    }
+
+    function buildQrMatrix(text) {
+      const qr = qrcode(0, "H");
+      qr.addData(text);
+      qr.make();
+      return qr;
+    }
+
+    function roundRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+    }
+
+    function drawCenterLogo(ctx, cx, cy, radius) {
+      if (activeLogoType === "none") return;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius + 5, 0, Math.PI * 2);
+      ctx.fillStyle = "#ffffff";
+      ctx.fill();
+
+      if (activeLogoType === "custom" && uploadedLogoImg) {
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+        ctx.clip();
+        ctx.drawImage(uploadedLogoImg, cx - radius, cy - radius, radius * 2, radius * 2);
+        ctx.restore();
+        return;
+      }
+
+      const palette = {
+        "scan-me": "#0f172a",
+        whatsapp: "#25d366",
+        link: "#7c3aed",
+        location: "#ef4444",
+        wifi: "#14b8a6",
+        contact: "#2563eb",
+        email: "#ca8a04",
+        menu: "#6d28d9",
+        paypal: "#1d4ed8",
+        bitcoin: "#f97316"
+      };
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+      ctx.fillStyle = palette[activeLogoType] || "#2563eb";
+      ctx.fill();
+
+      ctx.fillStyle = "#ffffff";
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = Math.max(2, radius * 0.11);
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      const s = radius * 0.56;
+
+      switch (activeLogoType) {
+        case "scan-me":
+          ctx.font = `800 ${Math.round(radius * 0.44)}px system-ui, sans-serif`;
+          ctx.fillText("SCAN", cx, cy - radius * 0.22);
+          ctx.fillText("ME", cx, cy + radius * 0.25);
+          break;
+        case "bitcoin":
+          ctx.font = `900 ${Math.round(radius * 1.15)}px system-ui, sans-serif`;
+          ctx.fillText("₿", cx, cy + 1);
+          break;
+        case "paypal":
+          ctx.font = `italic 900 ${Math.round(radius * 1.15)}px system-ui, sans-serif`;
+          ctx.fillText("P", cx, cy + 1);
+          break;
+        case "whatsapp": {
+          ctx.save();
+          const scale = (radius * 1.35) / 24;
+          ctx.translate(cx - 12 * scale, cy - 12 * scale);
+          ctx.scale(scale, scale);
+
+          const bubble = new Path2D("M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.26 8.26 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24 4.54 0 8.24 3.7 8.24 8.24 0 4.54-3.7 8.24-8.23 8.24z");
+          const handset = new Path2D("M16.56 14.38c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.07-.1-.23-.16-.48-.29z");
+
+          ctx.fillStyle = "#ffffff";
+          ctx.fill(bubble);
+          ctx.fill(handset);
+          ctx.restore();
+          break;
+        }
+        case "link": {
+          const box = radius * 0.56;
+          const lw = Math.max(2.4, radius * 0.13);
+          ctx.lineWidth = lw;
+          ctx.strokeStyle = "#ffffff";
+
+          roundRect(ctx, cx - box * 0.92, cy - box * 0.08, box, box, box * 0.18);
+          ctx.stroke();
+
+          roundRect(ctx, cx - box * 0.08, cy - box * 0.92, box, box, box * 0.18);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.moveTo(cx - box * 0.42, cy + box * 0.42);
+          ctx.lineTo(cx + box * 0.42, cy - box * 0.42);
+          ctx.stroke();
+          break;
+        }
+        case "location": {
+          ctx.save();
+          const scale = (radius * 1.32) / 24;
+          ctx.translate(cx - 12 * scale, cy - 12 * scale);
+          ctx.scale(scale, scale);
+          const pin = new Path2D("M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z");
+          ctx.fillStyle = "#ffffff";
+          ctx.fill(pin);
+          ctx.restore();
+          break;
+        }
+        case "wifi":
+          ctx.beginPath();
+          ctx.arc(cx, cy + s * 0.45, s * 0.9, Math.PI * 1.22, Math.PI * 1.78);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(cx, cy + s * 0.45, s * 0.52, Math.PI * 1.22, Math.PI * 1.78);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(cx, cy + s * 0.55, radius * 0.11, 0, Math.PI * 2);
+          ctx.fill();
+          break;
+        case "email":
+          ctx.strokeRect(cx - s * 0.82, cy - s * 0.55, s * 1.64, s * 1.1);
+          ctx.beginPath();
+          ctx.moveTo(cx - s * 0.82, cy - s * 0.55);
+          ctx.lineTo(cx, cy + s * 0.12);
+          ctx.lineTo(cx + s * 0.82, cy - s * 0.55);
+          ctx.stroke();
+          break;
+        case "contact":
+          ctx.strokeRect(cx - s * 0.85, cy - s * 0.62, s * 1.7, s * 1.24);
+          ctx.beginPath();
+          ctx.arc(cx - s * 0.3, cy - s * 0.1, s * 0.2, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.beginPath();
+          ctx.moveTo(cx + s * 0.1, cy - s * 0.2);
+          ctx.lineTo(cx + s * 0.55, cy - s * 0.2);
+          ctx.moveTo(cx + s * 0.1, cy + s * 0.18);
+          ctx.lineTo(cx + s * 0.55, cy + s * 0.18);
+          ctx.stroke();
+          break;
+        case "menu":
+          ctx.beginPath();
+          ctx.moveTo(cx - s * 0.35, cy - s * 0.7);
+          ctx.lineTo(cx - s * 0.35, cy + s * 0.7);
+          ctx.moveTo(cx + s * 0.35, cy - s * 0.7);
+          ctx.lineTo(cx + s * 0.35, cy + s * 0.7);
+          ctx.stroke();
+          break;
+      }
+
+      ctx.restore();
+    }
+
+    function drawQrModules(ctx, qr, startX, startY, qrBoxSize, fgColor) {
+      const count = qr.getModuleCount();
+      const quiet = 2;
+      const total = count + quiet * 2;
+      const cell = qrBoxSize / total;
+
+      ctx.fillStyle = fgColor;
+      for (let r = 0; r < count; r++) {
+        for (let c = 0; c < count; c++) {
+          if (qr.isDark(r, c)) {
+            ctx.fillRect(
+              startX + (c + quiet) * cell,
+              startY + (r + quiet) * cell,
+              Math.ceil(cell),
+              Math.ceil(cell)
+            );
+          }
+        }
+      }
+
+      const logoRadius = Math.round(qrBoxSize * 0.13);
+      drawCenterLogo(ctx, startX + qrBoxSize / 2, startY + qrBoxSize / 2, logoRadius);
+    }
+
+    function renderQR() {
+      const payload = getPayload();
+      if (!payload) return;
+
+      const canvas = document.getElementById("qrCanvas");
+      const ctx = canvas.getContext("2d");
+      const fg = document.getElementById("fgColor").value;
+      const bg = document.getElementById("bgColor").value;
+      const txtCol = document.getElementById("textColor").value;
+      const label = (document.getElementById("frameText").value || "Scan me!").trim();
+
+      let qr;
+      try {
+        qr = buildQrMatrix(payload);
+      } catch (e) {
+        document.getElementById("errorBox").textContent = "Text is too long for a QR code. Shorten your content.";
+        return;
+      }
+
+      const W = 420;
+      const H = activeFrame === "none" ? 420 : 520;
+      canvas.width = W;
+      canvas.height = H;
+
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, W, H);
+
+      ctx.font = "800 26px system-ui, -apple-system, sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      if (activeFrame === "none") {
+        drawQrModules(ctx, qr, 20, 20, W - 40, fg);
+        return;
+      }
+
+      if (activeFrame === "envelope") {
+        const qrBox = 240;
+        const qrX = (W - qrBox) / 2;
+        const qrY = 26;
+
+        ctx.fillStyle = bg;
+        ctx.strokeStyle = fg;
+        ctx.lineWidth = 7;
+        roundRect(ctx, qrX - 10, qrY - 8, qrBox + 20, qrBox + 40, 14);
+        ctx.fill();
+        ctx.stroke();
+
+        drawQrModules(ctx, qr, qrX, qrY, qrBox, fg);
+
+        const envLeft = 44;
+        const envRight = W - 44;
+        const envTop = 210;
+        const envBottom = H - 24;
+        const midX = W / 2;
+        const flapY = 328;
+
+        ctx.fillStyle = bg;
+        ctx.beginPath();
+        ctx.moveTo(envLeft, envTop);
+        ctx.lineTo(midX, flapY);
+        ctx.lineTo(envRight, envTop);
+        ctx.lineTo(envRight, envBottom - 16);
+        ctx.quadraticCurveTo(envRight, envBottom, envRight - 16, envBottom);
+        ctx.lineTo(envLeft + 16, envBottom);
+        ctx.quadraticCurveTo(envLeft, envBottom, envLeft, envBottom - 16);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.strokeStyle = fg;
+        ctx.lineWidth = 8;
+        ctx.lineJoin = "round";
+        ctx.stroke();
+
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        ctx.moveTo(envLeft + 6, envBottom - 6);
+        ctx.lineTo(midX - 58, flapY - 12);
+        ctx.moveTo(envRight - 6, envBottom - 6);
+        ctx.lineTo(midX + 58, flapY - 12);
+        ctx.stroke();
+
+        ctx.fillStyle = txtCol;
+        ctx.fillText(label, midX, envBottom - 46);
+        return;
+      }
+
+      if (activeFrame === "banner") {
+        ctx.strokeStyle = fg;
+        ctx.lineWidth = 8;
+        roundRect(ctx, 36, 24, W - 72, 360, 18);
+        ctx.stroke();
+
+        drawQrModules(ctx, qr, 54, 42, W - 108, fg);
+
+        ctx.fillStyle = fg;
+        roundRect(ctx, 36, 404, W - 72, 78, 16);
+        ctx.fill();
+
+        ctx.fillStyle = txtCol === "#000000" && fg === "#000000" ? "#ffffff" : txtCol;
+        ctx.fillText(label, W / 2, 444);
+        return;
+      }
+
+      if (activeFrame === "sketch") {
+        ctx.strokeStyle = fg;
+        ctx.lineWidth = 7;
+        ctx.strokeRect(56, 36, W - 112, 320);
+
+        ctx.lineWidth = 4;
+        const lines = [
+          [20, 74, 44, 66], [16, 150, 44, 150], [20, 235, 44, 242],
+          [W - 20, 74, W - 44, 66], [W - 16, 150, W - 44, 150], [W - 20, 235, W - 44, 242]
+        ];
+        lines.forEach(([x1, y1, x2, y2]) => {
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(x2, y2);
+          ctx.stroke();
+        });
+
+        drawQrModules(ctx, qr, 74, 54, W - 148, fg);
+
+        ctx.fillStyle = fg;
+        ctx.fillRect(56, 356, W - 112, 92);
+
+        ctx.fillStyle = txtCol === "#000000" && fg === "#000000" ? "#ffffff" : txtCol;
+        ctx.fillText(label, W / 2, 402);
+        return;
+      }
+
+      if (activeFrame === "mug") {
+        ctx.strokeStyle = fg;
+        ctx.lineWidth = 14;
+        ctx.beginPath();
+        ctx.moveTo(324, 130);
+        ctx.lineTo(364, 130);
+        ctx.quadraticCurveTo(388, 130, 388, 225);
+        ctx.quadraticCurveTo(388, 320, 364, 320);
+        ctx.lineTo(324, 320);
+        ctx.stroke();
+
+        ctx.fillStyle = bg;
+        ctx.strokeStyle = fg;
+        ctx.lineWidth = 8;
+        roundRect(ctx, 56, 78, 272, 396, 24);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = fg;
+        ctx.beginPath();
+        ctx.arc(105, 76, 34, Math.PI, 0);
+        ctx.arc(165, 64, 42, Math.PI, 0);
+        ctx.arc(232, 68, 38, Math.PI, 0);
+        ctx.arc(286, 78, 30, Math.PI, 0);
+        ctx.fill();
+
+        drawQrModules(ctx, qr, 78, 108, 228, fg);
+
+        ctx.fillStyle = fg;
+        roundRect(ctx, 82, 366, 220, 74, 14);
+        ctx.fill();
+
+        ctx.fillStyle = txtCol === "#000000" && fg === "#000000" ? "#ffffff" : txtCol;
+        ctx.fillText(label, 192, 404);
+        return;
+      }
+
+      if (activeFrame === "scooter") {
+        function shadeColor(hex, percent) {
+          const num = parseInt(hex.replace("#", ""), 16);
+          const amt = Math.round(2.55 * percent);
+          const R = Math.min(255, Math.max(0, (num >> 16) + amt));
+          const G = Math.min(255, Math.max(0, ((num >> 8) & 0x00ff) + amt));
+          const B = Math.min(255, Math.max(0, (num & 0x0000ff) + amt));
+          return "#" + ((1 << 24) + (R << 16) + (G << 8) + B).toString(16).slice(1);
+        }
+
+        const bodyTone = shadeColor(fg, 38);
+        const darkTone = fg;
+        const barHeight = 46;
+        const qrBox = 172;
+        const frameX = 42;
+        const frameY = 122;
+        const totalBoxH = qrBox + barHeight;
+
+        const wheelY = 446;
+        const wheelR = 40;
+        [124, 344].forEach(wx => {
+          ctx.fillStyle = bodyTone;
+          ctx.beginPath();
+          ctx.arc(wx, wheelY, wheelR, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = bg;
+          ctx.beginPath();
+          ctx.arc(wx, wheelY, 22, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = bodyTone;
+          ctx.beginPath();
+          ctx.arc(wx, wheelY, 9, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        ctx.fillStyle = bodyTone;
+        ctx.beginPath();
+        ctx.moveTo(68, 412);
+        ctx.quadraticCurveTo(68, 344, 140, 340);
+        ctx.lineTo(220, 340);
+        ctx.lineTo(230, 388);
+        ctx.lineTo(276, 388);
+        ctx.quadraticCurveTo(296, 322, 288, 226);
+        ctx.lineTo(322, 226);
+        ctx.quadraticCurveTo(340, 302, 344, 382);
+        ctx.lineTo(304, 412);
+        ctx.lineTo(218, 412);
+        ctx.lineTo(186, 396);
+        ctx.lineTo(132, 412);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = darkTone;
+        ctx.beginPath();
+        ctx.moveTo(168, 322);
+        ctx.quadraticCurveTo(202, 310, 236, 322);
+        ctx.lineTo(234, 340);
+        ctx.lineTo(164, 340);
+        ctx.closePath();
+        ctx.fill();
+
+        roundRect(ctx, 244, 218, 52, 17, 8.5);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(340, 236, 17, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(68, 412);
+        ctx.quadraticCurveTo(72, 360, 134, 360);
+        ctx.lineTo(134, 384);
+        ctx.lineTo(74, 412);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(300, 400);
+        ctx.quadraticCurveTo(306, 362, 374, 362);
+        ctx.lineTo(382, 400);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = darkTone;
+        roundRect(ctx, frameX, frameY, qrBox, totalBoxH, 16);
+        ctx.fill();
+
+        ctx.fillStyle = bg;
+        roundRect(ctx, frameX + 8, frameY + 8, qrBox - 16, qrBox - 12, 8);
+        ctx.fill();
+
+        drawQrModules(ctx, qr, frameX + 12, frameY + 12, qrBox - 24, darkTone);
+
+        ctx.font = "700 21px system-ui, -apple-system, sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = txtCol === "#000000" && darkTone === "#000000" ? "#ffffff" : txtCol;
+        ctx.fillText(label, frameX + qrBox / 2, frameY + qrBox + barHeight / 2 + 1);
+        return;
+      }
+
+      if (activeFrame === "coffee") {
+        ctx.strokeStyle = fg;
+        ctx.lineWidth = 5;
+        ctx.lineCap = "round";
+        [155, 205, 255].forEach(sx => {
+          ctx.beginPath();
+          ctx.moveTo(sx, 24);
+          ctx.quadraticCurveTo(sx - 12, 42, sx, 58);
+          ctx.stroke();
+        });
+
+        ctx.lineWidth = 12;
+        ctx.beginPath();
+        ctx.moveTo(318, 120);
+        ctx.lineTo(354, 120);
+        ctx.quadraticCurveTo(378, 120, 378, 195);
+        ctx.quadraticCurveTo(378, 265, 344, 265);
+        ctx.lineTo(306, 265);
+        ctx.stroke();
+
+        ctx.fillStyle = bg;
+        ctx.strokeStyle = fg;
+        ctx.lineWidth = 8;
+        ctx.beginPath();
+        ctx.moveTo(74, 84);
+        ctx.lineTo(334, 84);
+        ctx.lineTo(304, 356);
+        ctx.quadraticCurveTo(298, 382, 268, 382);
+        ctx.lineTo(140, 382);
+        ctx.quadraticCurveTo(110, 382, 104, 356);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        drawQrModules(ctx, qr, 96, 104, 216, fg);
+
+        ctx.fillStyle = fg;
+        ctx.beginPath();
+        ctx.moveTo(52, 398);
+        ctx.lineTo(356, 398);
+        ctx.lineTo(324, 428);
+        ctx.lineTo(84, 428);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = txtCol;
+        ctx.fillText(label, 204, 474);
+      }
+    }
+
+    function downloadPNG() {
+      const payload = getPayload();
+      if (!payload) return;
+      renderQR();
+      const canvas = document.getElementById("qrCanvas");
+      const link = document.createElement("a");
+      link.download = `qr4u-${activeType}-${activeFrame}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    }
+
+    function downloadSVG() {
+      const payload = getPayload();
+      if (!payload) return;
+      renderQR();
+      const canvas = document.getElementById("qrCanvas");
+      const dataUrl = canvas.toDataURL("image/png");
+      const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${canvas.width}" height="${canvas.height}" viewBox="0 0 ${canvas.width} ${canvas.height}"><image href="${dataUrl}" width="${canvas.width}" height="${canvas.height}"/></svg>`;
+      const blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.download = `qr4u-${activeType}-${activeFrame}.svg`;
+      link.href = url;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    renderQR();
+  </script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us | QR4U Custom QR Code Studio</title>
+  <meta name="description" content="Get in touch with QR4U (qr4u.org) for feedback, frame or logo suggestions, bug reports, or general inquiries." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://qr4u.org/contact.html" />
+
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-soft: #eff6ff;
+      --border: #e2e8f0;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .nav-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .logo { font-size: 1.25rem; font-weight: 800; color: var(--primary); text-decoration: none; }
+    .logo span { color: var(--text); }
+    nav a { text-decoration: none; color: var(--muted); font-weight: 500; margin-left: 20px; font-size: 0.95rem; }
+    nav a:hover, nav a.active { color: var(--primary); font-weight: 600; }
+
+    .page-header { text-align: center; padding: 36px 0 24px; }
+    .step-badge {
+      display: inline-block;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .page-header h1 { font-size: clamp(1.75rem, 3.5vw, 2.35rem); font-weight: 800; margin-bottom: 8px; }
+    .page-header p { color: var(--muted); max-width: 720px; margin: 0 auto; }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.85fr;
+      gap: 24px;
+      align-items: start;
+      margin-bottom: 42px;
+    }
+    @media (max-width: 840px) { .contact-grid { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+      padding: 28px;
+    }
+
+    .card h2 { font-size: 1.2rem; margin-bottom: 10px; }
+    .card p { color: var(--muted); font-size: 0.94rem; margin-bottom: 14px; }
+
+    label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-top: 12px;
+      margin-bottom: 5px;
+      color: var(--text);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      font-size: 0.95rem;
+      background: #ffffff;
+      color: var(--text);
+      font-family: inherit;
+    }
+
+    textarea { min-height: 120px; resize: vertical; }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+    }
+
+    .btn {
+      margin-top: 16px;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 20px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      background: var(--primary);
+      color: #ffffff;
+      transition: 0.15s ease;
+    }
+    .btn:hover { background: var(--primary-hover); }
+
+    .status-msg {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      min-height: 22px;
+    }
+    .status-msg.success { color: #15803d; }
+    .status-msg.error { color: #dc2626; }
+
+    .info-item {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .info-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .info-label { font-size: 0.82rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.3px; }
+    .info-value { font-size: 0.96rem; font-weight: 600; color: var(--text); margin-top: 2px; }
+
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    footer a { color: var(--muted); text-decoration: none; margin: 0 10px; }
+    footer a:hover { color: var(--primary); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav-bar">
+      <a href="/" class="logo">QR<span>4U</span></a>
+      <nav>
+        <a href="/">QR Generator</a>
+        <a href="/#how-it-works">How It Works</a>
+        <a href="/#use-cases">Use Cases</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html" class="active">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="page-header">
+      <span class="step-badge">Contact Us</span>
+      <h1>Have Feedback or a Feature Request?</h1>
+      <p>Reach out to QR4U with questions, frame or logo ideas, or issues you noticed while generating QR codes.</p>
+    </section>
+
+    <section class="contact-grid">
+      <div class="card">
+        <h2>Send a Message</h2>
+        <p>Fill out the form below to prepare your message for QR4U.</p>
+
+        <form id="contactForm" onsubmit="handleContactSubmit(event)" novalidate>
+          <label for="senderName">Your Name</label>
+          <input type="text" id="senderName" placeholder="Enter your name" required />
+
+          <label for="senderEmail">Email Address</label>
+          <input type="email" id="senderEmail" placeholder="you@example.com" required />
+
+          <label for="topic">Topic</label>
+          <select id="topic">
+            <option value="Frame or Logo Request">Frame or Logo Request</option>
+            <option value="Bug Report">Bug Report</option>
+            <option value="General Feedback">General Feedback</option>
+            <option value="Business Inquiry">Business Inquiry</option>
+          </select>
+
+          <label for="messageBody">Message</label>
+          <textarea id="messageBody" placeholder="Write your message here..." required></textarea>
+
+          <button type="submit" class="btn">Send Message</button>
+          <div class="status-msg" id="formStatus"></div>
+        </form>
+      </div>
+
+      <aside class="card">
+        <h2>Support &amp; Details</h2>
+        <p>Helpful information before reaching out:</p>
+
+        <div class="info-item">
+          <div class="info-label">Website</div>
+          <div class="info-value">https://qr4u.org</div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-label">Contact Email</div>
+          <div class="info-value">contact@qr4u.org</div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-label">Response Window</div>
+          <div class="info-value">Typically within 1–2 business days</div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-label">Quick Tip</div>
+          <div class="info-value" style="font-weight: 400; color: var(--muted); font-size: 0.9rem;">
+            If reporting a visual or scanning issue, mention which QR type, frame, or logo you selected.
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year"></span> QR4U (qr4u.org). All rights reserved.</p>
+      <div style="margin-top: 8px;">
+        <a href="/about.html">About</a>
+        <a href="/privacy-policy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById("senderName").value.trim();
+      const email = document.getElementById("senderEmail").value.trim();
+      const topic = document.getElementById("topic").value;
+      const msg = document.getElementById("messageBody").value.trim();
+      const status = document.getElementById("formStatus");
+
+      status.className = "status-msg";
+
+      if (!name || !email || !msg) {
+        status.classList.add("error");
+        status.textContent = "Please fill in your name, email address, and message.";
+        return;
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        status.classList.add("error");
+        status.textContent = "Please enter a valid email address.";
+        return;
+      }
+
+      const subject = encodeURIComponent(`[QR4U - ${topic}] Message from ${name}`);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nTopic: ${topic}\n\n${msg}`);
+      window.location.href = `mailto:contact@qr4u.org?subject=${subject}&body=${body}`;
+
+      status.classList.add("success");
+      status.textContent = "Your email app is opening with your message. If it does not open, email contact@qr4u.org directly.";
+      document.getElementById("contactForm").reset();
+    }
+  </script>
+</body>
+</html>
