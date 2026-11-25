@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QR4U — Free Custom QR Code Generator with Logo &amp; Frames | Wi-Fi, vCard, WhatsApp, PNG &amp; SVG</title>
-  <meta name="description" content="Create custom QR codes with optional frames and center logos on QR4U (qr4u.site) for Website URL, Wi-Fi, vCard, WhatsApp, Social, PDF, Text, SMS, Email, and Phone. Instant PNG and SVG export." />
-  <meta name="keywords" content="qr4u, free qr code generator, custom qr code with logo, qr code frame maker, whatsapp qr code generator, wifi qr code generator, vcard qr code, svg png qr code" />
+  <title>QR4U — Free QR Code Generator with Logo &amp; No Sign Up | URL to QR &amp; Static QR</title>
+  <meta name="description" content="Free QR code generator with logo and no sign up on QR4U (qr4u.site). Create a custom QR code with logo in center, static QR code, or URL to QR / link to QR for a website in PNG or SVG." />
+  <meta name="keywords" content="free qr code generator with logo, qr code generator with logo, qr code with logo in center, custom qr code with logo, free qr code generator no sign up, static qr code generator, url to qr code, link to qr code, qr code for website, url to qr" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href="https://qr4u.site/" />
 
@@ -81,9 +81,15 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
     html, body {
+      width: 100%;
       max-width: 100%;
-      overflow-x: hidden;
+      overflow-x: clip;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
@@ -173,6 +179,18 @@
     .workspace { display: grid; grid-template-columns: 1.4fr 0.9fr; gap: 26px; align-items: start; }
     @media (max-width: 880px) { .workspace { grid-template-columns: 1fr; gap: 16px; } }
 
+    .workspace > *,
+    .two-col > *,
+    .three-col > *,
+    .type-grid > *,
+    .download-grid > *,
+    .panel-box,
+    .preview-card,
+    .content-card {
+      min-width: 0;
+      max-width: 100%;
+    }
+
     .panel-box { background: #ffffff; border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 16px; }
     .panel-box h2 { font-size: 1.06rem; margin-bottom: 10px; }
 
@@ -187,6 +205,11 @@
     }
     textarea { min-height: 76px; resize: vertical; }
     input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14); }
+
+    input, select, textarea, .panel-box p, .content-card p {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
 
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
@@ -204,11 +227,15 @@
 
     .sub-settings-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-top: 8px; }
     .color-pill-box {
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0;
       background: #ffffff; border: 1px solid #cbd5e1; border-radius: 9px;
       padding: 8px 10px; font-size: 0.86rem; font-weight: 600; color: var(--muted);
     }
-    input[type="color"] { width: 32px; height: 28px; border: none; background: none; cursor: pointer; padding: 0; }
+    .color-pill-box span {
+      overflow-wrap: normal;
+      word-break: normal;
+    }
+    input[type="color"] { width: 32px; height: 28px; border: none; background: none; cursor: pointer; padding: 0; flex-shrink: 0; }
 
     .logo-picker-row { display: flex; gap: 12px; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 8px 2px 12px; align-items: center; }
     .logo-circle-btn {
@@ -238,7 +265,8 @@
     .qr-stage {
       background: #ffffff; border: 1px solid var(--border); border-radius: 18px;
       padding: 14px; display: flex; align-items: center; justify-content: center;
-      margin: 10px auto 14px; box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06); max-width: 100%;
+      margin: 10px auto 14px; box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+      width: 100%; max-width: 370px;
     }
     #qrCanvas { width: 100%; max-width: 340px; height: auto; display: block; }
 
@@ -643,14 +671,14 @@
     </section>
 
     <article class="content-card" id="how-it-works">
-      <h2>Free Custom QR Code Generator with Optional Frames &amp; Center Logos</h2>
-      <p>QR4U gives you a clean, ready-to-scan QR code immediately on load—without forcing a frame or center logo unless you choose to add one. When you do want extra branding, you can switch between separate <strong>Frame</strong> and <strong>Logo</strong> sections, customize colors, and export as <strong>PNG</strong> or <strong>SVG</strong>.</p>
+      <h2>Free QR Code Generator with Logo, Frames &amp; No Sign Up</h2>
+      <p>QR4U is a free QR code generator with logo and no sign up that starts with a clean, scannable QR code right away. Whether you need a static QR code generator for permanent links, a custom QR code with logo for branding, or a quick URL to QR / link to QR code for your website, you can customize it and export in PNG or SVG.</p>
 
       <h3>How to Use the Generator</h3>
       <ol>
-        <li><strong>Pick a QR type &amp; enter details:</strong> Choose Website URL, Wi-Fi, vCard, WhatsApp, Social, PDF Link, Plain Text, SMS, Email, or Phone.</li>
+        <li><strong>Pick a QR type &amp; enter details:</strong> Choose Website URL (for any URL to QR code or link to QR code), Wi-Fi, vCard, WhatsApp, Social, PDF Link, Plain Text, SMS, Email, or Phone.</li>
         <li><strong>Open the Frame tab (optional):</strong> Choose a frame style such as Envelope, Classic Banner, Sketch, Mug, Scooter, or Coffee Cup and customize label text and colors.</li>
-        <li><strong>Open the Logo tab (optional):</strong> Pick a preset icon (Scan Me, WhatsApp, Link, Location, Wi-Fi, Contact, Email, Menu, PayPal, Bitcoin) or upload your own JPG/PNG logo.</li>
+        <li><strong>Open the Logo tab (optional):</strong> Pick a preset icon or upload your own logo to create a QR code with logo in center.</li>
         <li><strong>Download PNG or SVG:</strong> Save your finished QR code for digital sharing or crisp print layouts.</li>
       </ol>
 
@@ -690,6 +718,12 @@
               <td>No Frame or Classic Banner + Link / PayPal / Bitcoin Logo</td>
               <td>PNG or SVG</td>
             </tr>
+<tr>
+              <td>Website Links &amp; Landing Pages</td>
+              <td>Website URL (URL to QR / Link to QR)</td>
+              <td>No Frame or Classic Banner + Optional Logo</td>
+              <td>PNG or SVG</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -699,6 +733,7 @@
       <p><strong>2. Can I upload my own brand logo?</strong><br />Yes. Go to the <strong>Logo</strong> section and click or drag-and-drop any JPG, JPEG, or PNG image up to 2MB.</p>
       <p><strong>3. Do static QR codes expire?</strong><br />No. Static QR codes encode your information directly into the QR pattern and keep working without expiration.</p>
       <p><strong>4. Should I choose PNG or SVG?</strong><br />Use <strong>PNG</strong> for websites, social posts, and messaging, and <strong>SVG</strong> for scalable printing.</p>
+<p><strong>5. Is QR4U a free QR code generator with no sign up and static QR codes?</strong><br />Yes. You can create a static QR code generator output for a website or link to QR code with no sign up required, and add a custom QR code with logo or QR code with logo in center whenever you want.</p>
     </article>
   </main>
 
@@ -1450,4 +1485,7 @@
     renderQR();
   </script>
 </body>
-</html></html>
+</html>
+```[cite: 13]
+
+Aap isay apni `index.html` ke taur par save kar sakte hain — kya aap ab ise deploy karke Search Console ya site preview check karna chahte hain?
